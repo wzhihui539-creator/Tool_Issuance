@@ -1,0 +1,16 @@
+<!doctype html><html lang="zh"><head><meta charset="utf-8"><title>Issue</title></head>
+<body>
+<h2>发放领用单 REQ#{{ req.id }}</h2>
+
+{% if error %}<p style="color:red">{{ error }}</p>{% endif %}
+
+<p><b>设备号：</b>{{ req.machine_no }}</p>
+<p><b>备注：</b>{{ req.note }}</p>
+
+<form method="post">
+  {% csrf_token %}
+  <button type="submit">确认发放（自动扣库存并写流水）</button>
+</form>
+
+<p><a href="/requisitions/{{ req.id }}/">返回详情</a></p>
+</body></html>

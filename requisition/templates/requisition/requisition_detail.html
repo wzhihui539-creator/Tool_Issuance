@@ -1,0 +1,28 @@
+<!doctype html><html lang="zh"><head><meta charset="utf-8"><title>Requisition Detail</title></head>
+<body>
+<h2>领用单详情 REQ#{{ req.id }}</h2>
+<p><b>状态：</b>{{ req.get_status_display }}</p>
+<p><b>申请人：</b>{{ req.requester.username }}</p>
+<p><b>设备号：</b>{{ req.machine_no }}</p>
+<p><b>备注：</b>{{ req.note }}</p>
+<p><b>提交时间：</b>{{ req.submitted_at }}</p>
+<p><b>发放时间：</b>{{ req.issued_at }}</p>
+<p><b>发放人：</b>{% if req.issued_by %}{{ req.issued_by.username }}{% endif %}</p>
+
+<h3>明细</h3>
+<table border="1" cellpadding="6">
+  <tr><th>物料</th><th>数量</th></tr>
+  {% for ln in lines %}
+    <tr><td>{{ ln.item.code }} - {{ ln.item.name }}</td><td>{{ ln.qty }}</td></tr>
+  {% empty %}
+    <tr><td colspan="2">无明细</td></tr>
+  {% endfor %}
+</table>
+
+<p>
+  {% if req.status == "SUBMITTED" %}
+    <a href="/requisitions/{{ req.id }}/issue/">发放（keeper）</a>
+  {% endif %}
+  | <a href="/requisitions/">返回列表</a>
+</p>
+</body></html>

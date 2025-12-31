@@ -1,0 +1,33 @@
+<!doctype html><html lang="zh"><head><meta charset="utf-8"><title>Requisitions</title></head>
+<body>
+<h2>领用单列表</h2>
+<p>
+  <a href="/requisitions/new/">新建领用单（worker）</a> |
+  <a href="/inventory/stock/">库存</a> |
+  <a href="/inventory/txns/">流水</a> |
+  <a href="/">Home</a>
+</p>
+
+<table border="1" cellpadding="6">
+  <tr>
+    <th>ID</th><th>状态</th><th>申请人</th><th>设备号</th><th>备注</th><th>创建</th><th>操作</th>
+  </tr>
+  {% for r in rows %}
+    <tr>
+      <td><a href="/requisitions/{{ r.id }}/">REQ#{{ r.id }}</a></td>
+      <td>{{ r.get_status_display }}</td>
+      <td>{{ r.requester.username }}</td>
+      <td>{{ r.machine_no }}</td>
+      <td>{{ r.note }}</td>
+      <td>{{ r.created_at }}</td>
+      <td>
+        {% if r.status == "SUBMITTED" %}
+          <a href="/requisitions/{{ r.id }}/issue/">发放（keeper）</a>
+        {% endif %}
+      </td>
+    </tr>
+  {% empty %}
+    <tr><td colspan="7">暂无领用单</td></tr>
+  {% endfor %}
+</table>
+</body></html>
