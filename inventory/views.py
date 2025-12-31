@@ -101,13 +101,13 @@ def stock_list(request):
     )
 
 
-@login_required
 def low_stock_list(request):
     q = request.GET.get("q", "").strip()
 
     rows = (
         Stock.objects.select_related("item")
         .filter(qty__lt=F("item__min_stock"))
+        .annotate(restock_need=Greatest(F("item__min_stock") - F("qty"), Value(0)))
         .order_by("item__code")
     )
 
@@ -121,6 +121,7 @@ def low_stock_list(request):
         )
 
     return render(request, "inventory/low_stock_list.html", {"rows": rows, "q": q})
+
 
 @login_required
 def txn_list(request):
