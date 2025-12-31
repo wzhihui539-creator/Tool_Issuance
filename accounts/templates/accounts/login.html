@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="zh">
+<head>
+  <meta charset="utf-8" />
+  <title>Login</title>
+</head>
+<body>
+  <h3>Login</h3>
+
+  {% if error %}
+    <p style="color:red">{{ error }}</p>
+  {% endif %}
+
+  <form method="post">
+    {% csrf_token %}
+    <div>
+      <input name="username" placeholder="username">
+    </div>
+    <div>
+      <input name="password" placeholder="password" type="password">
+    </div>
+    <button type="submit">Login</button>
+  </form>
+</body>
+</html>
