@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="zh">
+<head><meta charset="utf-8"><title>Low Stock</title></head>
+<body>
+  <h2>低库存预警</h2>
+
+  <form method="get">
+    <input name="q" placeholder="搜索编码/名称/规格/分类/库位" value="{{ q|default:'' }}">
+    <button type="submit">搜索</button>
+  </form>
+
+  <p>
+    <a href="/inventory/stock/">返回库存列表</a> |
+    <a href="/inventory/stock/in/">入库（keeper）</a>
+  </p>
+
+  <table border="1" cellpadding="6">
+    <tr>
+      <th>编码</th><th>名称</th><th>库位</th><th>最低库存</th><th>当前库存</th><th>差额</th>
+    </tr>
+    {% for s in rows %}
+      <tr style="background:#ffe6e6">
+        <td>{{ s.item.code }}</td>
+        <td>{{ s.item.name }}</td>
+        <td>{{ s.item.location }}</td>
+        <td>{{ s.item.min_stock }}</td>
+        <td>{{ s.qty }}</td>
+        <td>{{ s.item.min_stock|add:-s.qty }}</td>
+      </tr>
+    {% empty %}
+      <tr><td colspan="6">当前没有低库存</td></tr>
+    {% endfor %}
+  </table>
+</body>
+</html>

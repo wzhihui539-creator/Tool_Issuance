@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="zh">
+<head><meta charset="utf-8"><title>Item Detail</title></head>
+<body>
+  <h2>物料详情</h2>
+  <p><b>编码：</b>{{ item.code }}</p>
+  <p><b>名称：</b>{{ item.name }}</p>
+  <p><b>规格：</b>{{ item.spec }}</p>
+  <p><b>单位：</b>{{ item.unit }}</p>
+  <p><b>分类：</b>{{ item.category }}</p>
+  <p><b>库位：</b>{{ item.location }}</p>
+  <p><b>最低库存：</b>{{ item.min_stock }}</p>
+  <p><b>受控：</b>{{ item.is_controlled }}</p>
+  <p><b>启用：</b>{{ item.is_active }}</p>
+
+  <p>
+    <a href="/inventory/items/{{ item.id }}/edit/">编辑（keeper）</a> |
+    <a href="/inventory/items/{{ item.id }}/delete/">删除（keeper）</a> |
+    <a href="/inventory/items/">返回列表</a>
+  </p>
+</body>
+</html>

@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="zh">
+<head><meta charset="utf-8"><title>Delete Item</title></head>
+<body>
+  <h2>确认删除</h2>
+  <p>确定要删除：<b>{{ object.code }} - {{ object.name }}</b> 吗？</p>
+
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit">确认删除</button>
+  </form>
+
+  <p><a href="/inventory/items/{{ object.id }}/">取消</a></p>
+</body>
+</html>

@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="zh">
+<head><meta charset="utf-8"><title>{{ title }}</title></head>
+<body>
+  <h2>{{ title }}</h2>
+
+  {% if error %}
+    <p style="color:red">{{ error }}</p>
+  {% endif %}
+
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">提交</button>
+  </form>
+
+  <p><a href="/inventory/stock/">返回库存</a></p>
+</body>
+</html>

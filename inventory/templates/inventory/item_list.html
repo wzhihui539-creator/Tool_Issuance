@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="zh">
+<head><meta charset="utf-8"><title>Items</title></head>
+<body>
+  <h2>物料/刀具列表</h2>
+
+  <form method="get">
+    <input name="q" placeholder="搜索编码/名称/规格/分类/库位" value="{{ request.GET.q|default:'' }}">
+    <button type="submit">搜索</button>
+  </form>
+
+  <p>
+    <a href="/inventory/items/new/">新增物料（keeper）</a>
+    | <a href="/">Home</a>
+  </p>
+
+  <table border="1" cellpadding="6">
+    <tr>
+      <th>编码</th><th>名称</th><th>规格</th><th>分类</th><th>单位</th><th>库位</th><th>最低库存</th><th>受控</th><th>启用</th>
+    </tr>
+    {% for it in items %}
+      <tr>
+        <td><a href="/inventory/items/{{ it.id }}/">{{ it.code }}</a></td>
+        <td>{{ it.name }}</td>
+        <td>{{ it.spec }}</td>
+        <td>{{ it.category }}</td>
+        <td>{{ it.unit }}</td>
+        <td>{{ it.location }}</td>
+        <td>{{ it.min_stock }}</td>
+        <td>{{ it.is_controlled }}</td>
+        <td>{{ it.is_active }}</td>
+      </tr>
+    {% empty %}
+      <tr><td colspan="9">暂无数据</td></tr>
+    {% endfor %}
+  </table>
+</body>
+</html>

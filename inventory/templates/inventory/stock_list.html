@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="zh">
+<head><meta charset="utf-8"><title>Stock</title></head>
+<body>
+<h2>
+  库存列表
+  <span style="display:inline-block;padding:2px 8px;border:1px solid #ccc;border-radius:12px;
+    {% if low_count > 0 %}background:#ffe6e6{% endif %}">
+    低库存：{{ low_count }}
+  </span>
+</h2>
+
+  <form method="get">
+    <input name="q" placeholder="搜索编码/名称/规格/分类/库位" value="{{ q|default:'' }}">
+    <button type="submit">搜索</button>
+  </form>
+
+  <p>
+    <a href="/inventory/items/">物料列表</a> |
+    <a href="/inventory/txns/">库存流水</a> |
+    <a href="/inventory/stock/low/">低库存预警</a> |
+    <a href="/inventory/stock/in/">入库（keeper）</a> |
+    <a href="/inventory/stock/out/">出库（keeper）</a> |
+    <a href="/">Home</a>
+  </p>
+
+  <table border="1" cellpadding="6">
+    <tr>
+      <th>编码</th><th>名称</th><th>规格</th><th>单位</th><th>库位</th>
+      <th>最低库存</th><th>当前库存</th><th>建议补货量</th><th>状态</th>
+    </tr>
+
+    {% for s in rows %}
+      <tr {% if s.is_low %}style="background:#ffe6e6"{% endif %}>
+        <td>{{ s.item.code }}</td>
+        <td>{{ s.item.name }}</td>
+        <td>{{ s.item.spec }}</td>
+        <td>{{ s.item.unit }}</td>
+        <td>{{ s.item.location }}</td>
+        <td>{{ s.item.min_stock }}</td>
+        <td>{{ s.qty }}</td>
+        <td>
+          {% if s.is_low %}
+            {{ s.restock_need }}
+          {% else %}
+            -
+          {% endif %}
+        </td>
+        <td>
+          {% if s.is_low %}⚠️ 低库存{% else %}OK{% endif %}
+        </td>
+      </tr>
+    {% empty %}
+      <tr><td colspan="8">暂无库存记录</td></tr>
+    {% endfor %}
+  </table>
+</body>
+</html>
